@@ -1,4 +1,4 @@
-declare module "@cm-sigoo/utilities" {
+declare module "@cm-sigoo/common-react" {
   type FC<P = {}> = import("react").FC<P>;
   type PropsWithChildren<P = {}> = import("react").PropsWithChildren<P>;
 
