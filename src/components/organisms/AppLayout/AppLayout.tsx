@@ -1,4 +1,4 @@
-import { Theme, ThemeProvider } from "@mui/material";
+import { CssBaseline, Theme, ThemeProvider } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
 import { theme as muiTheme } from "../../../utils";
 import { CustomToolbar } from "../CustomToolbar";
@@ -12,9 +12,12 @@ export const AppLayout: FC<AppLayoutProps> = (props) => {
   const { children, label = "Sigoo App", theme } = props;
 
   return (
-    <ThemeProvider theme={theme ?? muiTheme}>
-      <CustomToolbar label={label} />
-      {children}
-    </ThemeProvider>
+    <>
+      <CssBaseline />
+      <ThemeProvider theme={theme ?? muiTheme}>
+        <CustomToolbar label={label} />
+        {children}
+      </ThemeProvider>
+    </>
   );
 };
