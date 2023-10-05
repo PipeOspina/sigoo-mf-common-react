@@ -1,4 +1,4 @@
-const { merge } = require("webpack-merge");
+const { mergeWithRules } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
 
 const port = process.env.PORT || 8080;
@@ -11,8 +11,34 @@ module.exports = (webpackConfigEnv, argv) => {
     argv,
   });
 
-  return merge(defaultConfig, {
+  return mergeWithRules({
+    module: {
+      rules: {
+        test: "match",
+        use: "replace",
+      },
+    },
+  })(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
+    module: {
+      rules: [
+        {
+          test: /\.css$/i,
+          use: [
+            require.resolve("style-loader", {
+              paths: [require.resolve("webpack-config-single-spa")],
+            }),
+            require.resolve("css-loader", {
+              paths: [require.resolve("webpack-config-single-spa")],
+            }),
+          ],
+        },
+        {
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: ["file-loader"],
+        },
+      ],
+    },
     devServer: {
       port,
     },

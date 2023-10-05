@@ -8,6 +8,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -17,10 +18,13 @@ import { AppsHubButton } from "../../molecules";
 
 export type CustomToolbarProps = {
   label: string;
+  search?: boolean;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
 };
 
 export const CustomToolbar: FC<CustomToolbarProps> = (props) => {
-  const { label } = props;
+  const { label, onSearchChange, search, searchValue } = props;
 
   const [menuAnchor, setMenuAnchor] = useState<
     (EventTarget & HTMLButtonElement) | null
@@ -60,6 +64,17 @@ export const CustomToolbar: FC<CustomToolbarProps> = (props) => {
                 </Typography>
               </Box>
             </Box>
+            {search && (
+              <Box width={500} mr={2} display="flex" flexDirection="column">
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder={`Cambiar subtitulo para ${label}`}
+                  value={searchValue}
+                  onChange={(event) => onSearchChange?.(event.target.value)}
+                />
+              </Box>
+            )}
             <Box
               width="fit-content"
               mr={2}
