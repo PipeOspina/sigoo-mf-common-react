@@ -13,6 +13,9 @@ declare module "@cm-sigoo/common-react" {
     PropsWithChildren<{
       label?: string;
       theme?: Theme;
+      search?: boolean;
+      searchValue?: string;
+      onSearchChange?: (value: string) => void;
     }>
   >;
 
