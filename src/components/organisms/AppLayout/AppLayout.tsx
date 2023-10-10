@@ -1,7 +1,9 @@
-import { CssBaseline, Theme, ThemeProvider } from "@mui/material";
-import { FC, PropsWithChildren } from "react";
-import { theme as muiTheme } from "../../../utils";
+import { CssBaseline, Theme } from "@mui/material";
+import { FC, PropsWithChildren, useEffect } from "react";
+import { DropdownLoading } from "../../atoms/DropdownLoading";
+import { CustomDrawer } from "../CustomDrawer";
 import { CustomToolbar } from "../CustomToolbar";
+import { Providers } from "../Providers";
 
 export type AppLayoutProps = PropsWithChildren<{
   label?: string;
@@ -21,10 +23,16 @@ export const AppLayout: FC<AppLayoutProps> = (props) => {
     searchValue,
   } = props;
 
+  useEffect(() => {
+    if (document) {
+      document.title = label;
+    }
+  }, [label]);
+
   return (
-    <>
+    <Providers theme={theme}>
       <CssBaseline />
-      <ThemeProvider theme={theme ?? muiTheme}>
+      <CustomDrawer>
         <CustomToolbar
           label={label}
           onSearchChange={onSearchChange}
@@ -32,7 +40,8 @@ export const AppLayout: FC<AppLayoutProps> = (props) => {
           searchValue={searchValue}
         />
         {children}
-      </ThemeProvider>
-    </>
+      </CustomDrawer>
+      <DropdownLoading />
+    </Providers>
   );
 };

@@ -7,5 +7,8 @@ export { Logo } from "./components/atoms";
 /// Organisms
 export { AppLayout } from "./components/organisms";
 
+// Hooks
+export { useLoading } from "./hooks/useLoading";
+
 // Utils
 export * from "./utils";

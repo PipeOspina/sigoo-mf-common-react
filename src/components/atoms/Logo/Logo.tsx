@@ -2,7 +2,11 @@ import { FC, SVGProps } from "react";
 
 export const Logo: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 575.95 145.39">
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 575.95 145.6"
+    >
       <defs>
         <style>
           .cls-1{"{fill:#1063ac;fill-rule:evenodd;}"}.cls-2{"{fill:#231f20;}"}

@@ -19,8 +19,18 @@ declare module "@cm-sigoo/common-react" {
     }>
   >;
 
+  // Hooks
+  const useLoading: <Reasons extends string>(
+    ...reasons: Reasons[]
+  ) => {
+    globalLoading: boolean;
+    reasons: Reasons[];
+    loading: boolean;
+    setLoading: (value: boolean, ...anotherReasons: Reasons[]) => void;
+  };
+
   // Utils
   const theme: Theme;
 
-  export { AppLayout, Logo, theme };
+  export { AppLayout, Logo, theme, useLoading };
 }
