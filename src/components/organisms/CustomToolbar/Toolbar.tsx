@@ -1,31 +1,26 @@
+import { Logo, ToolbarLoading } from "@/atoms";
+import { AuthContext } from "@/contexts";
+import { useAppDispatch, useAppSelector, useLoading } from "@/hooks";
+import { AppsHubButton, UserActionsButton, UserInfo } from "@/molecules";
+import { setOpen } from "@/redux";
+import { decodeToken } from "@/utils";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  AppBar,
-  Box,
-  IconButton,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { FC, useContext, useEffect } from "react";
-import { AuthContext } from "../../../contexts";
-import { useLoading } from "../../../hooks";
-import { decodeToken } from "../../../utils";
-import { Logo, ToolbarLoading } from "../../atoms";
-import { AppsHubButton, UserActionsButton, UserInfo } from "../../molecules";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { useCallback, useContext, useEffect } from "react";
 
-export type CustomToolbarProps = {
-  label: string;
-  search?: boolean;
-  searchValue?: string;
-  onSearchChange?: (value: string) => void;
-};
+export const CustomToolbar = () => {
+  const open = useAppSelector((state) => state.drawer.open);
+  const itemsLength = useAppSelector((state) => state.drawer.items.length);
 
-export const CustomToolbar: FC<CustomToolbarProps> = (props) => {
-  const { label, onSearchChange, search, searchValue } = props;
+  const dispatch = useAppDispatch();
 
   const { setUser } = useContext(AuthContext);
   const { setLoading } = useLoading("auth");
+
+  const toggleOpen = useCallback(() => {
+    dispatch(setOpen(!open));
+  }, [open]);
 
   useEffect(() => {
     if (document?.location) {
@@ -49,33 +44,29 @@ export const CustomToolbar: FC<CustomToolbarProps> = (props) => {
       }}
     >
       <Toolbar>
-        <IconButton>
-          <MenuIcon />
-        </IconButton>
-        <Box display="flex" alignItems="center" width="100%" ml={8}>
+        {itemsLength ? (
+          <IconButton onClick={toggleOpen}>
+            {open ? <CloseIcon /> : <MenuIcon />}
+          </IconButton>
+        ) : null}
+        <Box
+          display="flex"
+          alignItems="center"
+          width="100%"
+          ml={itemsLength ? 1.5 : 6.5}
+        >
           <Box display="flex" alignItems="flex-end">
-            <a href="/">
+            <a href="/" style={{ display: "flex" }}>
               <Logo width={95} />
             </a>
             <Typography
               variant="body2"
-              sx={{ color: (theme) => theme.palette.grey[500] }}
+              sx={{ color: (theme) => theme.palette.grey[500], mb: -0.5 }}
             >
-              {label}
+              {/* label */}
             </Typography>
           </Box>
         </Box>
-        {search && (
-          <Box width={500} mr={2} display="flex" flexDirection="column">
-            <TextField
-              fullWidth
-              size="small"
-              placeholder={`Cambiar subtitulo para ${label}`}
-              value={searchValue}
-              onChange={(event) => onSearchChange?.(event.target.value)}
-            />
-          </Box>
-        )}
         <Box width="fit-content" mr={2} display="flex" flexDirection="column">
           <UserInfo />
         </Box>

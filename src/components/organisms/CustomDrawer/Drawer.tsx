@@ -1,17 +1,7 @@
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import {
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-} from "@mui/material";
-import { FC, PropsWithChildren, useState } from "react";
+import { useAppSelector } from "@/hooks";
+import { Box, Drawer, Toolbar } from "@mui/material";
+import { FC, PropsWithChildren } from "react";
+import { DrawerLists } from "../DrawerLists";
 
 const drawerWidth = 240;
 
@@ -20,15 +10,14 @@ export type CustomDrawerProps = PropsWithChildren<{}>;
 export const CustomDrawer: FC<CustomDrawerProps> = (props) => {
   const { children } = props;
 
-  const [open, setOpen] = useState(true);
+  const open = useAppSelector(
+    (state) => state.drawer.open && state.drawer.items.length > 0
+  );
 
   return (
     <>
       <Drawer
         open={open}
-        onClose={() => {
-          console.log("close");
-        }}
         variant="persistent"
         sx={{
           width: drawerWidth,
@@ -42,39 +31,14 @@ export const CustomDrawer: FC<CustomDrawerProps> = (props) => {
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
-          <List>
-            {["Inbox klasjbdjasb", "Starred", "Send email", "Drafts"].map(
-              (text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          <DrawerLists />
         </Box>
       </Drawer>
       <Toolbar />
       <Box
         width="fit-content"
-        p={2}
+        py={2}
+        px={9.5}
         display="flex"
         sx={{
           transition: (theme) =>

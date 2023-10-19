@@ -1,5 +1,5 @@
 import { CssBaseline, Theme } from "@mui/material";
-import { FC, PropsWithChildren, useEffect } from "react";
+import { FC, Fragment, PropsWithChildren, useEffect } from "react";
 import { DropdownLoading } from "../../atoms/DropdownLoading";
 import { CustomDrawer } from "../CustomDrawer";
 import { CustomToolbar } from "../CustomToolbar";
@@ -13,15 +13,8 @@ export type AppLayoutProps = PropsWithChildren<{
   onSearchChange?: (value: string) => void;
 }>;
 
-export const AppLayout: FC<AppLayoutProps> = (props) => {
-  const {
-    children,
-    label = "Sigoo App",
-    theme,
-    onSearchChange,
-    search,
-    searchValue,
-  } = props;
+const ApplyProps: FC<AppLayoutProps> = (props) => {
+  const { label = "Sigoo App" } = props;
 
   useEffect(() => {
     if (document) {
@@ -29,16 +22,18 @@ export const AppLayout: FC<AppLayoutProps> = (props) => {
     }
   }, [label]);
 
+  return <Fragment />;
+};
+
+export const AppLayout: FC<AppLayoutProps> = (props) => {
+  const { children, theme } = props;
+
   return (
     <Providers theme={theme}>
+      <ApplyProps {...props} />
       <CssBaseline />
       <CustomDrawer>
-        <CustomToolbar
-          label={label}
-          onSearchChange={onSearchChange}
-          search={search}
-          searchValue={searchValue}
-        />
+        <CustomToolbar />
         {children}
       </CustomDrawer>
       <DropdownLoading />

@@ -1,5 +1,7 @@
+import { store } from "@/redux";
 import { Theme, ThemeProvider } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
+import { Provider } from "react-redux";
 import { AuthProvider, LoadingProvider } from "../../../contexts";
 import { theme as muiTheme } from "../../../utils";
 
@@ -12,9 +14,11 @@ export const Providers: FC<ProvidersProps> = (props) => {
 
   return (
     <ThemeProvider theme={theme ?? muiTheme}>
-      <LoadingProvider>
-        <AuthProvider>{children}</AuthProvider>
-      </LoadingProvider>
+      <Provider store={store}>
+        <LoadingProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </LoadingProvider>
+      </Provider>
     </ThemeProvider>
   );
 };

@@ -2,7 +2,13 @@
   "extends": "ts-config-single-spa",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/atoms": ["./src/components/atoms"],
+      "@/molecules": ["./src/components/molecules"],
+      "@/organisms": ["./src/components/organisms"]
+    }
   },
   "files": ["src/cm-sigoo-common-react.tsx"],
   "include": ["src/**/*"],

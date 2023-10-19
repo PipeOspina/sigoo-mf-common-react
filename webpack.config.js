@@ -1,5 +1,6 @@
 const { mergeWithRules } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
+const path = require("path");
 
 const port = process.env.PORT || 8080;
 
@@ -20,6 +21,14 @@ module.exports = (webpackConfigEnv, argv) => {
     },
   })(defaultConfig, {
     // modify the webpack config however you'd like to by adding to this object
+    resolve: {
+      alias: {
+        "@/atoms": path.resolve(__dirname, "src/components/atoms"),
+        "@/molecules": path.resolve(__dirname, "src/components/molecules"),
+        "@/organisms": path.resolve(__dirname, "src/components/organisms"),
+        "@": path.resolve(__dirname, "src"),
+      },
+    },
     module: {
       rules: [
         {
