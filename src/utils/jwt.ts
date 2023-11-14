@@ -1,15 +1,15 @@
+import { authPaths, envs } from "@/consts";
+import { JWTPayload, createRemoteJWKSet, jwtVerify } from "jose";
 import { User } from "../types";
 
-export const decodeToken = (token: string): User => {
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = decodeURIComponent(
-    window
-      .atob(base64)
-      .split("")
-      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-      .join("")
-  );
+export const JWKS = createRemoteJWKSet(new URL(authPaths.JWKS, envs.AUTH_URL));
 
-  return JSON.parse(jsonPayload) as User;
+export const validateToken = async (token: string) => {
+  const { payload } = await jwtVerify(token, JWKS, {
+    issuer: envs.AUTH_URL,
+    audience: "coordinadora",
+    algorithms: ["RS256"],
+  });
+
+  return payload as JWTPayload & User;
 };

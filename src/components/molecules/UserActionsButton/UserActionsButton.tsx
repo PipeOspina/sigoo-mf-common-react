@@ -1,3 +1,4 @@
+import { logout } from "@/utils";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Avatar,
@@ -32,6 +33,7 @@ export const UserActionsButton = () => {
 
   const handleLogout = useCallback(() => {
     setMenuAnchor(null);
+    logout("https://sigo-tracking-dev.coordinadora.com");
   }, []);
 
   return (

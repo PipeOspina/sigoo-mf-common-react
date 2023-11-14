@@ -1,16 +1,24 @@
+import { JWTPayload } from "jose";
+import { TerminalData } from "./api";
+
 export type User = {
+  _id?: number;
   abreviado?: string;
-  aud?: string;
-  email?: string;
-  exp: number;
   fullName: string;
-  iat?: number;
   name: string;
-  nonce?: string;
   preferred_username?: string;
   terminal: number;
-  us?: string;
-  _id?: number;
-  sub?: string;
-  iss?: string;
+};
+
+export type UserPermissions = {
+  menus: {
+    id: string;
+    nombre: string;
+  }[];
+  terminals: TerminalData[];
+};
+
+export type Session = {
+  user: JWTPayload & User;
+  permissions: UserPermissions;
 };

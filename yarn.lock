@@ -1540,6 +1540,7 @@ __metadata:
     identity-obj-proxy: ^3.0.0
     jest: ^27.0.6
     jest-cli: ^27.0.6
+    jose: ^4.15.4
     prettier: ^2.3.2
     pretty-quick: ^3.1.1
     react: ^18.2.0
@@ -7276,6 +7277,13 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: 96f1d69042b3c6dfc695f2a4e4b0db38af6fb78582ad1a02beaa57cfcd77cbd31567d7d865c1c85709b7c3e176eefa3b2035ffecd646005f15d8ef528eccf205
+  languageName: node
+  linkType: hard
+
+"jose@npm:^4.15.4":
+  version: 4.15.4
+  resolution: "jose@npm:4.15.4"
+  checksum: dccad91cb3357f36423774a0b89ad830dd84b31090de65cd139b85488439f16a00f8c59c0773825e8a1adb0dd9d13ad725ad66e6ea33880ecb3959bb99e1ea5b
   languageName: node
   linkType: hard
 

@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/hooks";
+import { useAppSelector, useUser } from "@/hooks";
 import { Box, Drawer, Toolbar } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
 import { DrawerLists } from "../DrawerLists";
@@ -10,6 +10,8 @@ export type CustomDrawerProps = PropsWithChildren<{}>;
 export const CustomDrawer: FC<CustomDrawerProps> = (props) => {
   const { children } = props;
 
+  const user = useUser();
+
   const open = useAppSelector(
     (state) => state.drawer.open && state.drawer.items.length > 0
   );
@@ -17,7 +19,7 @@ export const CustomDrawer: FC<CustomDrawerProps> = (props) => {
   return (
     <>
       <Drawer
-        open={open}
+        open={open && !!user}
         variant="persistent"
         sx={{
           width: drawerWidth,
@@ -46,7 +48,7 @@ export const CustomDrawer: FC<CustomDrawerProps> = (props) => {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.leavingScreen,
             }),
-          ...(open
+          ...(open && !!user
             ? {
                 marginLeft: `${drawerWidth}px`,
                 transition: (theme) =>
